@@ -1,5 +1,5 @@
 --!strict
-local BaseValues = require(game.ReplicatedStorage.Core.Shared.Metadata.BaseValues)
+local BaseValues = require(game.ReplicatedStorage.Core.Server.Metadata.BaseValues)
 local GlobaEventService = require(game.ReplicatedStorage.Core.Shared.Services.GlobalEventService)
 
 local topics : {[string] : any} = {

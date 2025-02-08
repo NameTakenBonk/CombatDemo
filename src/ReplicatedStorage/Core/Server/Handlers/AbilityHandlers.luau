@@ -1,6 +1,6 @@
 --!strict
 local GlobaEventService = require(game.ReplicatedStorage.Core.Shared.Services.GlobalEventService)
-local AbilityData = require(game.ReplicatedStorage.Core.Shared.Metadata.AbilityData)
+local AbilityData = require(game.ReplicatedStorage.Core.Server.Metadata.AbilityData)
 
 local topics : {[string] : any} = {
     ActivateAbility = function(caster : Player, abilityId : number)

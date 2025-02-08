@@ -1,6 +1,6 @@
 --!strict
-local BaseValues = require(game.ReplicatedStorage.Core.Shared.Metadata.BaseValues)
-local CharacterStats = require(game.ReplicatedStorage.Core.Shared.Metadata.CharacterStats)
+local BaseValues = require(game.ReplicatedStorage.Core.Server.Metadata.BaseValues)
+local CharacterStats = require(game.ReplicatedStorage.Core.Server.Metadata.CharacterStats)
 local GlobaEventService = require(game.ReplicatedStorage.Core.Shared.Services.GlobalEventService)
 
 --Order that we calculate stats based on states

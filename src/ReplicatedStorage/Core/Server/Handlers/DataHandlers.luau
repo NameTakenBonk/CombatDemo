@@ -1,5 +1,5 @@
 --!strict
-local PlayerStats = require(game.ReplicatedStorage.Core.Shared.DataSeeds.PlayerLeaderstats)
+local PlayerStats = require(game.ReplicatedStorage.Core.Server.DataSeeds.PlayerLeaderstats)
 local GlobaEventService = require(game.ReplicatedStorage.Core.Shared.Services.GlobalEventService)
 
 local CustomStore = require(game.ReplicatedStorage.Core.Server.Services.DataStoreService)

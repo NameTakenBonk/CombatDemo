@@ -9,7 +9,7 @@
 ]]
 
 -- Services
-local DataSetConfigs = require(game.ReplicatedStorage.Core.Shared.Metadata.DataStoreConfigs)
+local DataSetConfigs = require(game.ReplicatedStorage.Core.Server.Metadata.DataStoreConfigs)
 
 local HttpService = game:GetService("HttpService")
 local DataStoreService = game:GetService("DataStoreService")
