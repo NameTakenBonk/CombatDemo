@@ -1,44 +1,65 @@
 --!strict
 local PlayerStats = require(game.ReplicatedStorage.Core.Server.DataSeeds.PlayerLeaderstats)
-local GlobaEventService = require(game.ReplicatedStorage.Core.Shared.Services.GlobalEventService)
-
+local PlayerStoreData = require(game.ReplicatedStorage.Core.Server.DataSeeds.DefaultPlayerStoreData)
+local GlobalEventService = require(game.ReplicatedStorage.Core.Shared.Services.GlobalEventService)
 local CustomStore = require(game.ReplicatedStorage.Core.Server.Services.DataStoreService)
-local PlayerStatsStore : CustomStore.DataConnection = CustomStore.GetDataConnection("PlayerStats")
 
-local LoadedPlayerData : {{Parent : Player, Data : any, Connection : CustomStore.DataConnection}} = {}
+-- Get data connections
+local PlayerStatsStore : CustomStore.DataConnection = CustomStore.GetDataConnection("PlayerLeaderstats")
+local PlayerPurchaseStore : CustomStore.DataConnection = CustomStore.GetDataConnection("PlayerPurchaseStore")
 
 type PlayerStatsData = typeof(PlayerStats())
+type PlayerPurchases = typeof(PlayerStoreData())
 
-local topics : {[string] : any} = {
-    PlayerJoined = function(player : Player)
-        local playerStats : PlayerStatsData? = PlayerStatsStore:GetAsync(tostring(player.UserId))
-        local data = {
-            Parent = player,
-            Data = playerStats or PlayerStats(),
-            Connection = PlayerStatsStore
-        }
-    
-        table.insert(LoadedPlayerData, data)
-    end,
+-- Store player data in a dictionary keyed by the player's universal key
+local LoadedPlayerData : { [string]: {
+    Parent: Player,
+    Leaderstats: PlayerStatsData,
+    StoreData: PlayerPurchases,
+    OnLeaveCallbacks: {() -> ()}
+} } = {}
 
-    PlayerLeave = function(player : Player)
-        for i, v in LoadedPlayerData do
-            if v.Parent ~= player then
-                continue
-            end
+-- Handler for when a player joins
+local function onPlayerJoin(player: Player)
+    local universalKey = tostring(player.UserId)
+    local playerStats: PlayerStatsData = PlayerStatsStore:GetAsync(universalKey) or PlayerStats()
+    local playerPurchases: PlayerPurchases = PlayerPurchaseStore:GetAsync(universalKey) or PlayerStoreData()
     
-            task.spawn(function()
-                v.Connection:UpdateAsync(tostring(player.UserId), function(old)
-                    return v.Data or old
+    LoadedPlayerData[universalKey] = {
+        Parent = player,
+        Leaderstats = playerStats,
+        StoreData = playerPurchases,
+        OnLeaveCallbacks = {
+            function()
+                PlayerStatsStore:UpdateAsync(universalKey, function(old)
+                    return playerStats or old
                 end)
-            end)
-        end
-    end
-}
-
-for name , handler in topics do
-    local topicData = GlobaEventService.newTopic(name, false)
-    topicData.Event:Connect(handler)
+            end,
+            function()
+                PlayerPurchaseStore:UpdateAsync(universalKey, function(old)
+                    return playerPurchases or old
+                end)
+            end,
+        },
+    }
 end
+
+-- Handler for when a player leaves
+local function onPlayerLeave(player: Player)
+    local universalKey = tostring(player.UserId)
+    local data = LoadedPlayerData[universalKey]
+    if data then
+        task.spawn(function()
+            for _, callback in ipairs(data.OnLeaveCallbacks) do
+                callback()
+            end
+        end)
+        LoadedPlayerData[universalKey] = nil -- Cleanup the player's data
+    end
+end
+
+-- Bind events using GlobalEventService
+GlobalEventService.newTopic("PlayerJoined", false).Event:Connect(onPlayerJoin)
+GlobalEventService.newTopic("PlayerLeave", false).Event:Connect(onPlayerLeave)
 
 return 0

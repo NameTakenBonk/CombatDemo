@@ -14,10 +14,19 @@ local SecondsInDay = SecondsInHour * 24
 
 local playState : string = "Experimental-Alpha"
 local cfg : {[string] : DataSetConfig} = {}
-cfg.PlayerStats = {
-    MemCacheKey = `{playState}_PlayerCache`,
-    DiskStoreKey = `{playState}_PlayerDisk`,
-    TombStoreKey = `{playState}_PlayerTomb`,
+cfg.PlayerLeaderstats = {
+    MemCacheKey = `{playState}_PlayerStatCache`,
+    DiskStoreKey = `{playState}_PlayerStatDisk`,
+    TombStoreKey = `{playState}_PlayerStatTomb`,
+
+    MemCacheTTL = SecondsInDay,
+    DiskStoreTTL = -1,
+}
+
+cfg.PlayerPurchaseStore = {
+    MemCacheKey = `{playState}_PlayerPurchaseCache`,
+    DiskStoreKey = `{playState}_PlayerPurchaseDisk`,
+    TombStoreKey = `{playState}_PlayerPurchaseTomb`,
 
     MemCacheTTL = SecondsInDay,
     DiskStoreTTL = -1,
