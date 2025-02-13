@@ -8,6 +8,7 @@ local Abilities = {}
 function Abilities.LoadAbility(module : ModuleScript)
     local Config = require(module) :: Types.Ability
 
+    -- Connecting the activation key to the function inside the config
     UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
         if input.KeyCode == Config.ActivationKey then
             Config.OnActivate()
