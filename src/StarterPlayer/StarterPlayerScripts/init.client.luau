@@ -15,6 +15,3 @@ for _, module in script:GetChildren() do
         if not success then warn(response) end
     end
 end
-
--- I will need to add a proper controller to this
-Modules.Abilities.LoadAbility(ReplicatedStorage.Core.Configs.Abilities.AbilityShowcase)
