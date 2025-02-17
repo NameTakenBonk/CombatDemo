@@ -5,7 +5,7 @@ local Abilities = require(script.Abilities)
 local Manager = {}
 
 function Manager:Init()
-    Abilities.LoadAbility(ReplicatedStorage.Core.Configs.Abilities.AbilityShowcase)
+    Abilities.LoadAbilities(require(ReplicatedStorage.Core.Configs.Classes.Frieren))
 end
 
 return Manager

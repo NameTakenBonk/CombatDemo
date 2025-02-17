@@ -31,4 +31,4 @@ return {
         Ability3 = require(script.Teleportation),
         Ultimate = require(script.SealingMagic)
     }
-} :: Types.Character
+} :: Types.Class

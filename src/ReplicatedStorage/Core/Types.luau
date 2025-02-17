@@ -5,10 +5,13 @@ export type Ability = {
     Description : string,
     Cooldown : number,
     Cost : number,
-    OnActivate : any
+    Animation : number | AnimationTrack,
+    OnActivate : any,
+    ClientReplication : any,
+    Server : any
 }
 
-export type Character = {
+export type Class = {
     Info : {
         Name : string,
         Title : string,
@@ -28,7 +31,13 @@ export type Character = {
         HP5 : number,
         MP5 : number
     },
-    Abilities : { Ability }
+    Abilities : { 
+        Passive : Ability,
+        Ability1 : Ability,
+        Ability2 : Ability,
+        Ability3 : Ability,
+        Ultimate : Ability
+     }
 }
 
 return Types
