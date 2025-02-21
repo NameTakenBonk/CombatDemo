@@ -8,7 +8,8 @@ export type Ability = {
     Animation : number | AnimationTrack,
     OnActivate : any,
     ClientReplication : any,
-    Server : any
+    Server : any,
+    CustomSettings : {any}?
 }
 
 export type Class = {

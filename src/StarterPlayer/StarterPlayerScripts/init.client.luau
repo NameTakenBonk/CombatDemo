@@ -1,17 +1,13 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-local Modules = {}
-
--- Initialising all modules under the client
 for _, module in script:GetChildren() do
-    if module:IsA("ModuleScript") then
-        local name = module.Name
-        Modules[name] = require(module)
-        
-        local success, response = pcall(function()
-            Modules[name]:Init()
-        end)
+	if not module:IsA("ModuleScript") then
+		return
+	end
 
-        if not success then warn(response) end
-    end
+	local success, err = pcall(function()
+		require(module):Init()
+	end)
+
+	if not success then
+		warn("Failed to initiate "..module.Name.."client module due to", err)
+	end
 end
