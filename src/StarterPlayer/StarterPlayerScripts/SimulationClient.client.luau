@@ -25,7 +25,7 @@ end)
 
 -- TEMP CODE NOT MODULAR YET
 ImpactEvent.Event:Connect(function(_, _, Caster : Player, Velocity : Vector3, ImpactedPart : BasePart, Normal : Vector3, ImpactPosition : Vector3, Material : EnumItem, ...)
-    local effectClone = ReplicatedStorage.Objects.Abillities.Impact:Clone()
+    local effectClone = ReplicatedStorage.Objects.Abillities.Frieren.Particles.Impact:Clone()
     effectClone.Parent = workspace
     effectClone.Position = ImpactPosition
     Debris:AddItem(effectClone, 10)

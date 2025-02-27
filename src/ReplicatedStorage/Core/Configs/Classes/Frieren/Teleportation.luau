@@ -1,4 +1,7 @@
 --!strict
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Teleport = ReplicatedStorage.Teleport :: RemoteEvent
 
 local Types = require(script.Parent.Parent.Parent.Parent.Types)
 
@@ -8,7 +11,7 @@ return {
     Cooldown = 15,
     Cost = 40,
     Animation = 95844200176981,
-    OnActivate = function()
-
+    OnActivate = function(hit)
+        Teleport:FireServer(hit)
     end
 } :: Types.Ability  

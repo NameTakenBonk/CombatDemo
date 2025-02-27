@@ -9,12 +9,9 @@ return {
     Cost = 50,
     Animation = 95844200176981,
     OnActivate = function()
-
-    end,
-    ClientReplication = function()
         
     end,
-    Server = function()
+    ClientReplication = function()
         
     end
 } :: Types.Ability  

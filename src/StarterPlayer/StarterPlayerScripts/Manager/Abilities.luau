@@ -47,6 +47,11 @@ function Abilities.LoadAbilities(Class : Types.Class)
 
         if input.KeyCode == Enum.KeyCode.F then
             Abilities.Ability1.AnimationTrack:Play()
+        elseif input.KeyCode == Enum.KeyCode.V then
+            Abilities.Ability2.OnActivate(Character)
+            Abilities.Ability2.AnimationTrack:Play()
+        elseif input.KeyCode == Enum.KeyCode.E then
+            Abilities.Ability3.OnActivate(Mouse:Get3DPosition())
         end
     end)
 end
