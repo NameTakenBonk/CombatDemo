@@ -6,9 +6,8 @@ export type Ability = {
     Cooldown : number,
     Cost : number,
     Animation : number | AnimationTrack,
-    OnActivate : any,
-    ClientReplication : any,
-    Server : any,
+    OnActivate : (any) -> nil,
+    ClientReplication : (any) -> nil,
     CustomSettings : {any}?
 }
 

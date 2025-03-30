@@ -13,6 +13,20 @@ local Types = require(ReplicatedStorage.Core.Types)
 
 local class
 
+local AbilitiesMods = {}
+for _, class in ReplicatedStorage.Core.Configs.Classes:GetChildren() do
+    AbilitiesMods[class.Name] = { } :: { Types.Ability }
+    
+    for _, ability : ModuleScript in class:GetChildren() do
+        if not ability:IsA("ModuleScript") then continue end
+
+        local mod = require(ability) 
+        print(class, ability, mod)
+        AbilitiesMods[class.Name][ability.Name] = mod
+    end
+end
+
+
 local Abilities = {}
 
 local function LoadAnimations(class)
@@ -54,6 +68,12 @@ function Abilities.LoadAbilities(Class : Types.Class)
             Abilities.Ability3.OnActivate(Mouse:Get3DPosition())
         end
     end)
+end
+
+function Abilities.Replicate(class: string, ability: string, player: Player, ...)
+    print("Replicate Client", class, ability, ...)
+    print(AbilitiesMods)
+    AbilitiesMods[class][ability].Replicate(player, ...)
 end
 
 return Abilities

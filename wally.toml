@@ -6,3 +6,4 @@ realm = "shared"
 
 [dependencies]
 secure-cast = "1axen/secure-cast@1.1.4"
+Red = "red-blox/red@2.3.0"
